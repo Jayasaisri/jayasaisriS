@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>myacc</title>
+<style type="text/css">
+body
+{
+background: url("fl.jpg");
+background-repeat: no-repeat;
+background-position: top-right;
+opacity: 0.8;
+}
+
+</style>
+</head>
+<body>
+<h1>NEW ACCOUNT?</h1>
+<center>
+
+<div style="height: 300px;width: 250px; background-color: green; position: absolute ;align-items: left">
+<table align="center"; width="50%">
+
+<tr>
+<td> <input type="text" placeholder="Username"> </td>
+</tr>
+
+<tr>
+<td> <input type="number" placeholder="phonenumber" ></td>
+</tr>
+    	
+<tr>
+<td> <input type="text" placeholder="E-mail"></td>
+</tr>
+ 
+<tr>
+<td> <input type="password" placeholder="password" ></td>
+</tr>
+    	
+<tr>
+<td> <input type="password" placeholder="confirm password"></td>
+</tr>
+    	
+<tr>
+<td> <input type="submit" value="register"></td>
+</tr>
+</center>
+</table>
+</div>
+</body>
+</html>
+
+
+
+
+
+
