@@ -1,0 +1,25 @@
+!DOCTYPE html>
+<html>
+<head>
+	<title>href vs submit </title>
+</head>
+<body>
+	<form action="second.html">
+	USER NAME <input type="text" name="un">
+	PASSWORD<input type="text" name="pass" >
+	<input type="submit" >
+	
+	<a href="second.html">
+	<img src="dxc.png" width="20">	
+	
+	</a>
+	</form>
+
+
+</body>
+</html>
+
+
+
+
+
