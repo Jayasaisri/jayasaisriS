@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+	animals=["dog","cat","tiger",'lion']
+	for(i=0;i<animals.length;i++)
+	{
+		console.log(animals[i])
+	}
+</script>
+</head>
+<body>
+mama miya 
+</body>
+</html>
