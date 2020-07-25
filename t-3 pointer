@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style >
+li.pointer
+{
+cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+select ur favorite
+<ul>
+<li class="pointer">badham</li>
+<li >cashew</li>
+<li class="pointer">pista</li>
+<li >walnut</li>
+</ul>
+<input type="submit" value="ok" >
+
+</body>
+</html>
