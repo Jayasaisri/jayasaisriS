@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="fldset.css">
+</head>
+<body>
+
+<fieldset>
+<legend>Login Page</legend>
+<table width="80%" align="center" border="1px">
+	<thead>
+	<tr>
+		<th>USERNAME</th>  <th>PHONENUMBER</th>
+	</tr>
+</thead>
+<tbody>
+<tr>
+		<td>MANI</td>  <td>9512357846</td>
+	</tr>
+
+	<tr>
+		<td>CHANTI</td>  <td>7536951284</td>
+	</tr>
+
+
+	<tr>
+		<td>LAVANYA</td>  <td>98753215958</td>
+	</tr>
+
+</tbody>
+
+</fieldset>
+
+</body>
+</html>
