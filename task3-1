@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+	<table width="50%"; align="center"; border="2px">
+		<tr>
+			<td>first</td>  <td>second</td>  <td>username</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">raavi</td>   <td>rpad</td>
+		</tr>
+		<tr>
+			<td>somireddy</td>  <td colspan="2" align="center">jayasaisri</td>  
+		</tr>
+
+	</table>
+
+</body>
+</html>
