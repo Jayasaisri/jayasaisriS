@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="t3-2.css">
+	
+</head>
+<body>
+	<table border="2px"; align="center"; width="50%">
+		<tbody>
+		<tr>
+			<th>month</th>   <th>day</th> <th>name</th>
+		</tr>
+
+		<tr>
+			<td>jan</td>   <td>mon</td> <td>mouni</td>
+		</tr>
+
+		<tr rowspan="2">
+			<td>march</td>   <td>tues</td> <td>latha</td>
+		</tr>
+
+		
+
+		<tr>
+			<td>june</td>   <td>thurs</td> <td>pruthvi</td>
+		</tr>
+
+		<tr>
+			<td>july</td>   <td>fri</td> <td>jaya</td>
+		</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
