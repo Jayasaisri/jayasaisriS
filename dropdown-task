@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+	<body style="background-color: yellow">
+		
+	</body>
+	<center>
+	<h1>move the mouse to button to select ur favorite</h1>
+    
+	ICECREAMS
+	<select style="width: 100px; height: 40px;background-color:grey">
+		<option style="background-color: blue;font-size: 23">select</option>
+		<option style="background-color: red">vanilla</option>
+		<option style="background-color: green">butterscotch</option>
+		<option style="background-color: #cc7025">nutsoverloades</option>
+	</select>
+	</center>
+
+</body>
+</html>
