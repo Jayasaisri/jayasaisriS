@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ABC</title>
+</head>
+<body>
+<center>
+<b>
+<i>
+<u>
+<marquee direction = "right" >
+<h1>MEETING THE EMOTIONAL NEEDS </h1>
+</marquee>
+</u>
+</i>
+</b> 
+</center>
+<p align="left">
+The pandemic and the uncertainities around it have triggered a psychological impact among students. The pressure is more on the ones who are prepaaring for the board exams for the next year. The scholls must conduct a webiners on cybersecurity and psycological counselling. Te latter can boost the student's confidence .
+</p>
+<ul>
+	<li>I</li>
+	<li>II</li>
+	<li>III</li>
+</ul>
+<ol type="I">
+	<li>A</li>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>4</li>
+	</ul>
+	<li>B</li>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>4</li>
+	</ul>
+
+	<li>C</li>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>4</li>
+	</ul>
+</ol>
+DOB<input type=" "  >
+mail<input type="email" >
+
+
+</body>
+</html>
