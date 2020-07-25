@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+<form action="three.html">
+<input type="date" name="test" id="dob" max="2020-07-24">
+<input type="submit" >
+
+
+</form>
+</body>
+
+</html>
