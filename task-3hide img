@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>my image </title>
+	<script >
+		function changeVisibility() 
+		{
+        document.getElementById("pic").style.visibility = "hidden";
+    }
+	</script>
+</head>
+<body>
+	
+	<img src="daddy.jpg" id="pic" >
+	<button onclick="changeVisibility()">Hide</button>
+
+</body>
+</html>
+
+
+
