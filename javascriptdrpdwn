@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+function fill() 
+{
+icecream=['vanila','butterscotch','nutsoverloaded','mango','blackcurrent'];
+var a=document.getElementById('dropdown');
+for(i=0;i<icecream.length;i++)
+{
+var ele=document.createElement('option');
+ele.text=icecream[i];
+a.add(ele,i+1)
+}
+}
+</script>
+</head>
+<body onload="fill()">
+<select  id="dropdown">
+<option>select icecreams</option>
+</select>
+</body>
+</html>
+
