@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+	body
+{
+background: url("fl.jpg");
+background-repeat: no-repeat;
+ height: 1250px;
+background-position: left;
+background-color: green;
+opacity: 0.9;
+}
+</style>
+<script type="text/javascript">
+types=['graduation','post graduation']
+function filldd()
+{
+var typeDD=document.getElementById('type');
+for(i=0;i<types.length;i++)
+{
+var ele=document.createElement('option');
+ele.text=types[i];
+typeDD.add(ele,i+1)
+}
+}
+data=[['CSE','ECE','EEE','IT','ME','BT','CE'], ['MSC','Mtech','MBA','MS']];
+function filldata()
+{
+var typeDDN=document.getElementById('type');
+var selectedIndex=typeDDN.selectedIndex;
+console.log(selectedIndex);
+var dataDD=document.getElementById('dd');
+dataDD.innerText=null;
+for(i=0;i<data[selectedIndex-1].length;i++)
+{
+var ele=document.createElement('option');
+ele.text=data[selectedIndex-1][i];
+dataDD.add(ele,i+1)
+}
+}
+function test(e)
+{	
+//var a= document.getElementById('mytxt').value;
+//alert(a);	
+
+//alert(e.which);
+
+if(!( e.which >= 65 && e.which <=90 ))
+{
+e.preventDefault(); //a-97 , A - 65
+}
+}
+function checkPassword(form) { 
+password1 = form.password1.value; 
+password2 = form.password2.value; 
+// If password not entered 
+if (password1 == '') 
+alert ("Please enter Password"); 
+// If confirm password not entered 
+else if (password2 == '') 
+alert ("Please enter confirm password"); 
+// If Not same return False.     
+else if (password1 != password2) { 
+alert ("\nPassword did not match: Please try again...") 
+return false; 
+} 
+  
+// If same return True. 
+else{ 
+alert("Password Match: proceed!") 
+return true; 
+} 
+} 
+function dobValidate()	{
+var d=new Date();
+var yy=d.getFullYear();
+var mon=d.getMonth()+1;
+var dd=d.getDate();
+
+if(mon<10){
+mon='0'+mon;
+}
+if(dd<10){
+dd='0'+dd;
+}
+document.getElementById('dob').min=yy+'-'+mon+'-'+dd;
+
+}
+</script>
+</head>
+<body>
+<h1>New?</h1>
+<h2>REGISTER</h2>
+<center>
+<div style="height: 340px;width: 260px; background-color: aqua; position: absolute ">
+<table align="center"; width="50%">
+<form onSubmit = "return checkPassword(this)">
+<tr>
+	 <!-- Enter Username -->
+<td> 
+	USER NAME <input type="text" placeholder="Username"  onkeypress ="test(event)"> </td>
+</tr>
+
+<tr>
+<td> 
+	PASSWORD<input type="password" placeholder="password" name="password1" ></td>
+</tr>
+    	
+<tr>
+<td> 
+	CONFIRM PASSWORD<input type="password" placeholder="confirm password" name="password2"></td>
+</tr>
+<br>
+
+<label for="Qualifications" >Education qualification:</label>
+<body onload="filldd()">
+<select id="type" onchange="filldata()"
+>
+
+<option  name=Qualifications >select </option>
+</select>
+	<select id="dd">
+		<option>select</option>
+	</select>
+
+
+	<tr>
+<td> <input type="submit" value="check pass" ></td>
+</tr>
+	<tr>
+		<td>
+	ELIGIBILITY
+<input type="date" id="dob" onclick="dobValidate()">
+</td>
+</tr>
+
+
+<tr>
+		<td>
+	ELIGIBILITY
+<input type="date" id="dob" onclick="dobValidate()">
+</td>
+</tr>
+
+<tr>
+	<td>
+  <input type="submit" value="REGISTER">
+  </td>
+	</tr>
+
+
+</table>
+</form>
+</div>
+</center>
+</body>
+</html>
