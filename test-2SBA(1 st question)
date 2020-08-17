@@ -1,0 +1,24 @@
+import java.util.*;
+public class TestFirst {
+
+	public static void main(String[] args) {
+		String mydelim = " : "; 
+        String mystr = "This : is  : Java: Programming "; 
+        StringTokenizer geeks = 
+                new StringTokenizer(mystr, mydelim); 
+        int count = geeks.countTokens(); 
+        System.out.println("Number of tokens : " + count);
+        while (geeks.hasMoreElements()) 
+        	 System.out.println(geeks.nextElement());
+
+
+
+	}
+
+}
+
+
+
+
+
+ 
