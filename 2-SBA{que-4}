@@ -1,0 +1,40 @@
+import java.util.*;
+class InvalidException extends RuntimeException{ 
+	public InvalidException() {
+		super("Invalid Marks");  
+		}  
+}
+class Marks
+{
+	void validMarks(int MarksEntered)throws InvalidException
+	{
+		if(MarksEntered >100)
+			throw new InvalidException();
+		
+		else if(MarksEntered>=0 && MarksEntered<=100)
+			System.out.println("Mraks are Valid ");
+			
+	}
+
+
+public static class TestSecond {
+	public static void main(String[] args) {
+		Marks m=new Marks();
+		try {
+			m.validMarks(101);
+			m.validMarks(6);
+			m.validMarks(60);
+			m.validMarks(90);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();	
+		}
+
+		System.out.println("end ");
+			
+		}
+		
+}
+}
+
