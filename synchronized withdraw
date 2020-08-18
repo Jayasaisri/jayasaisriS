@@ -1,0 +1,55 @@
+package com.mythread.demos;
+
+class Account
+{
+public synchronized void getMoney(){
+for(int i=0;i<10;i++){
+System.out.println(i+" "+Thread.currentThread().getName()+" WITHDRAWING MONEY");
+try {
+Thread.sleep(3000);
+} catch (InterruptedException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+}
+
+System.out.println("DONE WITHDRAWING");
+}
+
+}
+
+
+class AccountHolder implements Runnable{
+Account account;
+public AccountHolder(Account account) {
+this.account=account;
+}
+@Override
+public void run() {
+
+account.getMoney();
+}
+}
+
+public class BankDemo {
+
+public static void main(String[] args) {
+
+Account icici007=new Account();	
+
+AccountHolder ATM1=new AccountHolder(icici007);
+AccountHolder ATM2=new AccountHolder(icici007);
+
+Thread thd=new Thread(ATM1,"ATM1 icici007 ");
+thd.start();
+
+Thread thd1=new Thread(ATM2,"ATM2 icici007 ");
+thd1.start();
+
+
+
+}
+
+
+
+}
