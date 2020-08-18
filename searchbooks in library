@@ -1,0 +1,67 @@
+package com.mupack.colldemo;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+public class MainLib {
+
+Map<Integer, List<Book>> bookstore;
+
+public void displayBooksByLibraryId(int libraryId)
+{
+List<Book> books=bookstore.get(libraryId);
+
+for(Book book:books){
+System.out.println(book);
+}
+
+}
+
+
+
+public static void main(String[] args) {
+
+Book book1=new Book(2222,"Hary porter","j.k rowlin");	
+Book book2=new Book(2233,"Road To Success","my passion");	
+Book book3=new Book(2244,"Road to Failure","My x");	
+
+List<Book> books=new ArrayList<Book>();
+
+books.add(book1);
+books.add(book2);
+books.add(book3);
+
+
+Library library=new Library("M.G Library", 101, "John", books);
+
+//----------------------------------------------------------------
+
+Book book4=new Book(3322,"Hary porter","j.k rowlin");	
+Book book5=new Book(3333,"Road To Success","my passion");	
+Book book6=new Book(3344,"Road to Failure","My x");	
+
+List<Book> books1=new ArrayList<Book>();
+
+books1.add(book4);
+books1.add(book5);
+books1.add(book6);
+
+
+Library library1=new Library("Central Library", 102, "Rock", books1);
+
+
+MainLib m= new MainLib();	
+
+m.bookstore=new HashMap<Integer,List<Book>>();
+m.bookstore.put(library.getLibraryId(), library.getBooks());
+m.bookstore.put(library1.getLibraryId(), library1.getBooks());
+
+
+m.displayBooksByLibraryId(101);
+
+}
+
+}
