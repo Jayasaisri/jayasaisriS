@@ -1,0 +1,85 @@
+package com.mupack.colldemo;
+
+public class Book implements Comparable<Book>{
+
+private	int isbn;
+private String title;
+private	String authorName;
+public int getIsbn() {
+return isbn;
+}
+public void setIsbn(int isbn) {
+this.isbn = isbn;
+}
+public String getTitle() {
+return title;
+}
+public void setTitle(String title) {
+this.title = title;
+}
+public String getAuthorName() {
+return authorName;
+}
+public void setAuthorName(String authorName) {
+this.authorName = authorName;
+}
+public Book(int isbn, String title, String authorName) {
+super();
+this.isbn = isbn;
+this.title = title;
+this.authorName = authorName;
+}
+@Override
+public String toString() {
+return "Book [isbn=" + isbn + ", title=" + title + ", authorName=" + authorName + "]";
+}
+
+public Book(){}
+@Override
+public int compareTo(Book o) {
+return o.isbn - this.isbn;   
+}
+
+
+
+}
+
+
+
+
+package com.mupack.colldemo;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class CollSortDemo {
+
+public static void main(String[] args) {
+
+
+List<Book> books=new ArrayList<Book>();
+
+Book b1=new Book(5, " Test ","any thing");
+Book b2=new Book(23, " My Book","never know");
+Book b3=new Book(3, "The Book","dont know");
+Book b4=new Book(9, "Java","James");
+
+books.add(b1);
+books.add(b2);
+books.add(b3);
+books.add(b4);
+
+// Comparable -- compareTo  --logic for sorting
+
+Collections.sort(books);
+
+for(Book book:books)
+{
+System.out.println(book);
+
+}
+
+}
+
+}
