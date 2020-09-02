@@ -1,0 +1,830 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<body style="background-color:#C5EAEB;">
+</body>
+
+<h1 align="center"> WELCOME TO ATTENDANCE PORTAL</h1>
+
+<style type="text/css">
+
+input[type="submit"]
+{
+font-size: 40px;
+height:50px;
+width:150px";
+background-color: yellow;
+font-family: Forte;
+}
+
+
+
+body {
+  background-image: url('pic.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+</style>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="markAttend">
+
+<br>
+<h2>Select the sem of our choice </h2>
+<select   style="width: 130px; height: 28px; background-color: aqua"  value="choose">
+<option  style="background-color: yellow; font-size: 25px"> sem 1</option>
+<option style="background-color: green; font-size: 25px "> sem 2</option>
+<option style="background-color: red; font-size: 25px"> sem 3</option>
+<option style="background-color: brown; font-size: 25px"> sem 4</option>
+</select>
+<br>
+<h3>Want to Mark attendance ??</h3>
+<h4>click on the button!!!!</h4>
+<input type="submit"   value="mark attendance" cursor="hover">
+
+
+</form>
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.project.Serv;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+
+
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.attendance.dao.AttendanceDao;
+import com.project.model.Attendance;
+import com.project.model.Students;
+
+
+@WebServlet("/markAttend")
+public class markAttend extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public markAttend() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		AttendanceDao dao=new AttendanceDao();
+		
+		
+		
+		int sem=Integer.parseInt(request.getParameter("sem"));
+		ArrayList<Students> studentList=dao.getStudentsBySem(sem);
+		
+		for(Students p:studentList) {
+			int studId=p.getStudId();
+			String studName=p.getStudName();
+			Date thisDate=new Date();
+			int semester=sem;
+			String attendance="Absent";
+			
+			/*Date thisDate=null;
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			try{
+				thisDate=sdf.parse(todayDate);
+				}
+			catch (Exception e) {
+				e.printStackTrace();
+				}*/
+			
+			
+			Attendance attend= new Attendance(studId, studName, thisDate, semester, attendance);
+			dao.insertIntoAttendance(attend);
+		}
+			
+		
+		HttpSession session=request.getSession();
+		session.setAttribute("studentList", studentList);
+		
+		
+		
+		RequestDispatcher rd= request.getRequestDispatcher("displayStudentsBySem.jsp");
+		rd.forward(request, response);
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@page import="com.project.model.Students"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Students By Semester</title>
+</head>
+<body>
+<form action="markAttendVal">
+
+<center>
+	<font face="Trebuchet MS" size="6" color="white">Mark the Attendance</font>
+</center><br>
+
+<table id="students" align="center">
+
+<tr> <th> Stud Id </th> <th> Name </th>  <th> Select </th> </tr>
+<%
+
+ArrayList<Students> studentlList=(ArrayList<Students>)session.getAttribute("studentList");
+
+for(Students p:studentlList)
+{
+	out.print("<tr>");
+	out.print("<td>"+p.getStudId()+"</td>");
+	out.print("<td>"+p.getStudName()+"</td>");
+	out.print("<td> <label class='container'>Mark<input type='checkbox' name='status' value='"+p.getStudId()+"'> <span class='checkmark'></span></label></td>");
+	out.print("</tr>");
+}
+
+%>
+
+</table>
+
+
+<input type="submit" style="font-family: Trebuchet MS;">
+
+</form>
+
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.project.Serv;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import com.attendance.dao.AttendanceDao;
+import com.project.model.Attendance;
+
+
+/**
+ * Servlet implementation class markAttendVal
+ */
+@WebServlet("/markAttendVal")
+public class markAttendVal extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public markAttendVal() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		AttendanceDao dao=new AttendanceDao();
+		
+		String[] data=request.getParameterValues("status");
+		//PrintWriter out=response.getWriter();
+		for(String datum:data) {
+			int studId=Integer.parseInt(datum);
+			
+			Attendance attend=new Attendance(studId);
+			dao.updateAttendance(attend);
+		}
+		/*PrintWriter out=response.getWriter();
+		out.print("Successful");*/
+		
+		RequestDispatcher rd= request.getRequestDispatcher("Success.jsp");
+		rd.forward(request, response);
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Successful</title>
+</head>
+<body>
+<form action="HomePage.jsp">
+<input type="submit" value="Go to Home Page" style="font-family: Trebuchet MS;">
+</form>
+
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Attendance Portal</title>
+</head>
+<body>
+<form action="DropDown.jsp">
+<input type="submit" value="Mark Attendance" style="font-family: Trebuchet MS;">
+</form>
+<br><br>
+<form action="SearchPage.jsp">
+<input type="submit" value="   Check Status   " style="font-family: Trebuchet MS;">
+</form>
+
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Search Attendance</title>
+<script>
+ $(document).ready(function(){
+ 	var dtToday = new Date();
+ 	var month = dtToday.getMonth() + 1;
+ 	var day = dtToday.getDate();
+ 	var year = dtToday.getFullYear();
+ 	if(month < 10)
+ 		month = '0' + month.toString();
+ 	if(day < 10)
+ 		day = '0' + day.toString();
+ 	var maxDate = year + '-' + month + '-' + day;
+ 	$('#dateControl').attr('max', maxDate);
+ })
+ </script>
+
+</head>
+<body>
+<form action="SemDateServ">
+<select name="sem" id="sem">
+<option value="0"> Select Semester: </option>
+<option value="1"> Sem 1 </option>
+<option value="2"> Sem 2 </option>
+<option value="3"> Sem 3 </option>
+<option value="4"> Sem 4 </option>
+</select>
+</form>
+<script>
+var x, i, j, l, ll, selElmnt, a, b, c;
+/*look for any elements with the class "custom-select":*/
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /*for each element, create a new DIV that will act as the selected item:*/
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /*for each element, create a new DIV that will contain the option list:*/
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+    /*for each option in the original select element,
+    create a new DIV that will act as an option item:*/
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /*when an item is clicked, update the original select box,
+        and the selected item:*/
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+      /*when the select box is clicked, close any other select boxes,
+      and open/close the current select box:*/
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+    });
+}
+function closeAllSelect(elmnt) {
+  /*a function that will close all select boxes in the document,
+  except the current select box:*/
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+/*if the user clicks anywhere outside the select box,
+then close all select boxes:*/
+document.addEventListener("click", closeAllSelect);
+</script>
+
+<script type="text/javascript">
+	function Checktext()
+{
+ if ($('#sem').val() == '0') {
+ alert('Select the semester first');
+return false;
+}
+else
+{
+return true;
+}
+}
+
+</script>
+
+<script type="text/javascript">
+	function Checkdate()
+{
+ if ($('#dateControl').val() == '') {
+ alert('Select a date');
+return false;
+}
+else
+{
+return true;
+}
+}
+
+</script>
+
+
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.project.Serv;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.attendance.dao.AttendanceDao;
+import com.project.model.Attendance;
+
+/**
+ * Servlet implementation class SemDateServ
+ */
+@WebServlet("/SemDateServ")
+public class SemDateServ extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SemDateServ() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		AttendanceDao dao=new AttendanceDao();
+		
+		int sem=Integer.parseInt(request.getParameter("sem"));
+		String dt=request.getParameter("date");
+		
+		Date date=null;
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			date=sdf.parse(dt);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Date not given");
+		}
+		
+		
+		
+		if(dao.searchResult(sem, date)==null){
+			HttpSession session=request.getSession();
+			session.setAttribute("norecs", dao.searchResult(sem, date));
+			
+			RequestDispatcher red= request.getRequestDispatcher("ResultPageNotFound.jsp");
+			red.forward(request, response);
+		}
+		else {
+			ArrayList<Attendance> attendanceList=dao.searchResult(sem, date);
+		HttpSession session=request.getSession();
+		session.setAttribute("attendanceList", attendanceList);
+		
+		RequestDispatcher rd= request.getRequestDispatcher("ResultPage.jsp");
+		rd.forward(request, response);
+		}
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>No Records Found</title>
+
+</head>
+<body>
+<form action="HomePage.jsp">
+<input type="submit" value="Go to Home Page" style="font-family: Trebuchet MS;">
+</form>
+
+
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@page import="com.project.model.Attendance"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Result</title>
+</head>
+<body>
+<table id="students" align="center">
+<%
+
+
+
+ArrayList<Attendance> attendanceList= (ArrayList<Attendance>)session.getAttribute("attendanceList");
+
+
+	out.print("<tr> <th> Stud Id </th> <th> Name </th>  <th> Status </th> </tr>");
+for(Attendance p:attendanceList)
+{
+	out.print("<tr>");
+	out.print("<td>"+p.getStudId()+"</td>");
+	out.print("<td>"+p.getStudName()+"</td>");
+	out.print("<td>"+p.getAttendance()+"</td>");
+	out.print("</tr>");
+}
+
+%>
+
+
+</table>
+
+<br><br>
+<form action="HomePage.jsp">
+<input type="submit" value="Go to Home Page" style="font-family: Trebuchet MS;">
+</form>
+
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.attendance.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.project.conn.DBConnection;
+import com.project.model.Attendance;
+import com.project.model.Students;
+
+
+
+public class AttendanceDao {
+	public ArrayList<Students> getStudentsBySem(int sem){
+		try {
+			Connection connection=DBConnection.getConnect();
+			String sql="select * from students where sem=?";
+			PreparedStatement stat=connection.prepareStatement(sql);
+			
+			stat.setInt(1, sem);
+			
+			ResultSet rs=stat.executeQuery();
+			ArrayList<Students> studentList=new ArrayList<>();
+			
+			while(rs.next()) {
+				int studId=rs.getInt("stud_id");
+				String studName=rs.getString("stud_name");
+				Students students=new Students(studId, studName);
+				
+				studentList.add(students);
+			}
+			return studentList;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String insertIntoAttendance(Attendance attendance) {
+		try {
+			Connection con=DBConnection.getConnect();
+			String sql="insert into attendance values(?,?,?,?,?)";
+			PreparedStatement stat=con.prepareStatement(sql);
+			
+			stat.setInt(1, attendance.getStudId());;
+			stat.setString(2, attendance.getStudName());
+			stat.setDate(3, new java.sql.Date(attendance.getThisDate().getTime()));
+			stat.setInt(4, attendance.getSemester());
+			stat.setString(5, attendance.getAttendance());
+			
+			int res=stat.executeUpdate();
+			if(res>0)
+				return "Mark the Attendance";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Invalid Credentials";
+	}
+	
+	public String updateAttendance(Attendance attendance) {
+		try {
+			Connection con=DBConnection.getConnect();
+			String sql="update attendance set attendance='Present' where stud_id=?";
+			PreparedStatement stat=con.prepareStatement(sql);
+			
+			stat.setInt(1, attendance.getStudId());;
+			
+			int res=stat.executeUpdate();
+			if(res>0)
+				return "Updated the Attendance";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Invalid Credentials";
+	}
+	
+	public ArrayList<Attendance> searchResult(int sem,Date date){
+		try {
+			Connection connection=DBConnection.getConnect();
+			String sql="select * from attendance where sem=? and ADate=?";
+			PreparedStatement stat=connection.prepareStatement(sql);
+			
+			stat.setInt(1, sem);
+			stat.setDate(2, new java.sql.Date(date.getTime()));
+			
+			ResultSet rs=stat.executeQuery();
+			ArrayList<Attendance> attendanceList=new ArrayList<>();
+			
+			if(rs.next() == false) {
+				return null;
+			}
+			else {
+			do{
+				int studId=rs.getInt(1);
+				String studName=rs.getString(2);
+				String attendance=rs.getString(5);
+				Attendance attend=new Attendance(studId, studName, attendance);
+				
+				attendanceList.add(attend);
+			}while(rs.next());
+			}
+			return attendanceList;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.project.model;
+
+import java.util.Date;
+
+public class Attendance {
+	private int studId;
+	private String studName;
+	private Date thisDate;
+	private int semester;
+	private String attendance;
+	public int getStudId() {
+		return studId;
+	}
+	public void setStudId(int studId) {
+		this.studId = studId;
+	}
+	public String getStudName() {
+		return studName;
+	}
+	public void setStudName(String studName) {
+		this.studName = studName;
+	}
+	public Date getThisDate() {
+		return thisDate;
+	}
+	public void setThisDate(Date thisDate) {
+		this.thisDate = thisDate;
+	}
+	public int getSemester() {
+		return semester;
+	}
+	public void setSemester(int semester) {
+		this.semester = semester;
+	}
+	public String getAttendance() {
+		return attendance;
+	}
+	public void setAttendance(String attendance) {
+		this.attendance = attendance;
+	}
+	public Attendance(int studId, String studName, Date thisDate, int semester, String attendance) {
+		super();
+		this.studId = studId;
+		this.studName = studName;
+		this.thisDate = thisDate;
+		this.semester = semester;
+		this.attendance = attendance;
+	}
+	
+	public Attendance(int studId) {
+		super();
+		this.studId = studId;
+	}
+	public Attendance(int studId, String studName, String attendance) {
+		super();
+		this.studId = studId;
+		this.studName = studName;
+		this.attendance = attendance;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Attendance [studId=" + studId + ", studName=" + studName + ", thisDate=" + thisDate + ", semester="
+				+ semester + ", attendance=" + attendance + "]";
+	}
+	
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.project.model;
+
+public class Students {
+	private int studId; 
+	private String studName;
+	private int sem;
+	public int getStudId() {
+		return studId;
+	}
+	public void setStudId(int studId) {
+		this.studId = studId;
+	}
+	public String getStudName() {
+		return studName;
+	}
+	public void setStudName(String studName) {
+		this.studName = studName;
+	}
+	public int getSem() {
+		return sem;
+	}
+	public void setSem(int sem) {
+		this.sem = sem;
+	}
+	public Students(int studId, String studName, int sem) {
+		super();
+		this.studId = studId;
+		this.studName = studName;
+		this.sem = sem;
+	}
+	public Students(int studId, String studName) {
+		super();
+		this.studId = studId;
+		this.studName = studName;
+	}
+	
+	public Students() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public String toString() {
+		return "Students [studId=" + studId + ", studName=" + studName + ", sem=" + sem + "]";
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.project.conn;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+
+public class DBConnection {
+	public static Connection getConnect(){
+		try{
+		Class.forName("oracle.jdbc.OracleDriver");
+		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "dxcfs","pass");
+		return con;
+		}
+		catch (Exception e) {
+		e.printStackTrace();
+		return null;
+		}
+		}
+
+		
+
+}
+
+
+
+
+
+
