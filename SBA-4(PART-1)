@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>net.codejava</groupId>
+<artifactId>SpringMvcHibernateXML</artifactId>
+<name>SpringMvcHibernateXML</name>
+<packaging>war</packaging>
+<version>1.0.0-BUILD-SNAPSHOT</version>
+
+<properties>
+<java-version>1.7</java-version>
+<org.springframework-version>4.0.3.RELEASE</org.springframework-version>
+</properties>
+
+<dependencies>
+
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjrt</artifactId>
+    <version>1.6.11</version>
+</dependency>
+
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.23</version>
+</dependency>
+
+
+
+<!-- Spring -->
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-context</artifactId>
+<version>${org.springframework-version}</version>
+</dependency>
+
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-webmvc</artifactId>
+<version>${org.springframework-version}</version>
+</dependency>
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-orm</artifactId>
+<version>${org.springframework-version}</version>
+<type>jar</type>
+<scope>compile</scope>
+</dependency>
+
+<!-- Hibernate -->
+<dependency>
+<groupId>org.hibernate</groupId>
+<artifactId>hibernate-core</artifactId>
+<version>4.3.5.Final</version>
+</dependency>
+
+<!-- Servlet -->
+<dependency>
+<groupId>javax.servlet</groupId>
+<artifactId>javax.servlet-api</artifactId>
+<version>3.1.0</version>
+<scope>provided</scope>
+</dependency>
+<dependency>
+<groupId>javax.servlet.jsp</groupId>
+<artifactId>javax.servlet.jsp-api</artifactId>
+<version>2.3.1</version>
+<scope>provided</scope>
+</dependency>
+<dependency>
+<groupId>jstl</groupId>
+<artifactId>jstl</artifactId>
+<version>1.2</version>
+</dependency>
+
+<!-- Apache Database Connection Pool -->
+<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+<dependency>
+   <groupId>commons-dbcp</groupId>
+   <artifactId>commons-dbcp</artifactId>
+   <version>1.4</version>
+</dependency>
+ 
+</dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <additionalProjectnatures>
+                        <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+                    </additionalProjectnatures>
+                    <additionalBuildcommands>
+                        <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+                    </additionalBuildcommands>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>org.test.int1.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="ISO-8859-1">
+<style type="text/css">
+body { 
+  background: aqua;
+  text-align: center;
+  padding: 20px 20px;
+}
+
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+<h2>Delete Data by Author Name...!</h2>
+<form action="deleteByName">
+Author Name:<input type="text" name="authorName">
+<input type="submit">
+</form>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style >
+ h1 {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 0.9;
+  padding: 10px;
+  font-family: 'Syncopate', sans-serif;
+  text-transform: uppercase;
+  background: radial-gradient(
+    circle farthest-corner at center center,
+    skyblue,
+    #111
+  ) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>
+
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>  ${status} </h1>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+</style>
+
+<title>AuthorDetails</title>
+</head>
+<body>
+<table >
+<tr> <td> Author Id </td> <td> Author Name </td> <td>Author City </td>  </tr>
+<c:forEach items="${Author}" var="author">
+<tr>
+<td> ${Author.authorId}</td>
+<td> ${Author.authorName} </td>
+<td> ${Author.authorCity} </td>
+
+</tr>
+</c:forEach>
+
+</table>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+body { 
+  background: #739e85;
+  text-align: center;
+  padding: 20px 20px;
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+</style>
+
+
+<title>AuthorDetails</title>
+</head>
+<body>
+<table border="border" width="80%">
+<tr> <td> Author Id </td> <td> Author Name </td> <td>Author City </td>  </tr>
+<c:forEach items="${Author}" var="author">
+<tr>
+<td> ${Author.authorId}</td>
+<td> ${Author.authorName} </td>
+<td> ${Author.authorCity} </td>
+
+</tr>
+</c:forEach>
+</table>
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+
+
+<title>AUTHOR PORTAL</title>
+
+<meta charset="UTF-8">
+<style type="text/css">
+input[type=text] 
+{
+    padding:6px; 
+    border:6px solid #ccc; 
+    -webkit-border-radius: 7px;
+    border-radius: 10px;
+}
+h1{
+font-family: Viner Hand ITC
+}
+body { 
+  background: #cff06e;
+  text-align: center;
+  padding: 20px 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>Welcome to Authors Portal</h1>
+<br>
+<form action="SaveDetailsAuthor">
+<h1>New  Creation......!</h1>
+<br>
+<input type="submit" value="CreateAuthor">
+</form>
+<br>
+<br>
+<form action="UpdateAuthorPage">
+<h1>Author Update......!</h1>
+<br>
+<input type="submit" value="Updatecity">
+</form>
+<br>
+<br>
+<form action="authorsByCity">
+<h1>Author Search By City Name......!</h1>
+<br>
+<input type="submit" value="SearchDetailsByCity">
+</form>
+<br>
+<br>
+<form action="SearchDetailsByAuthorName">
+<h1>Author Search By Author Name......!</h1>
+<br>
+<input type="submit" value="SearchDetailsByName">
+</form>
+<br>
+<br>
+<form action="DeleteDetailsByAuthorName">
+<h1>Author Delete Data By Author Name......!</h1>
+<br>
+<input type="submit" value="DeleteDetailsByName">
+</form>
+
+
+
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="ISO-8859-1">
+
+<style type="text/css">
+input[type=text] 
+{
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+body { 
+  background: aqua;
+  text-align: center;
+  padding: 20px 20px;
+}
+h1{
+font-family: Viner Hand ITC
+}
+</style>
+
+
+<title>Create Author</title>
+</head>
+<body>
+<h1>
+Hello Author PLease Provide Below Details to Create Your Record in the List!  
+</h1>
+<form action="display">
+<h1> Author ID:</h1>
+<input type="number" name="authorId">
+<br>
+<br>
+<h1> Author Name: </h1>
+<input type="text" name="authorName">
+<br>
+<br>
+<h1> Author City: </h1>
+<input type="text" name="authorCity">
+<br>
+<br>
+
+<input type="submit" name="saveAuthor">
+</form>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+body { 
+  background: #9bc0cc;
+  text-align: center;
+  padding: 20px 20px;
+}
+h1{
+font-family: Viner Hand ITC
+}
+input[type=text] 
+{
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+</style>
+
+<title>Insert title here</title>
+</head>
+<body>
+<h2>Search Authors by Name....!</h2>
+<form action="authorsByName">
+<h1>Author Name:</h1>
+<input type="text" name="authorName">
+<input type="submit">
+</form>
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+
+body { 
+  background: #bc9bcc;
+  text-align: center;
+  padding: 20px 20px;
+}
+h1{
+font-family: Viner Hand ITC
+}
+
+
+
+</style>
+
+
+<title>Insert title here</title>
+
+</head>
+<body>
+<h2>Search Authors by City</h2>
+<form action="authorsByCity">
+<h1>Author By City: </h1>
+<select name="authorrCity">
+<option value="Mumbai">Mumbai</option>
+<option value="Bangalore">Bangalore</option>
+<option value="Kerala">Kerala</option>
+<option value="Vijayawada">Vijayawada</option>
+</select>
+<input type="submit">
+</form>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<html>
+<head>
+<title>Update</title>
+<style type="text/css">
+
+body { 
+  background: #cff06e;
+  text-align: center;
+  padding: 20px 20px;
+}
+h1{
+font-family: Viner Hand ITC
+}
+input[type=text] 
+{
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+</style>
+
+</head>
+<body>
+<form action="searchForUpdate">
+<h1> Please Provide Your AuthorID Number To Update Details</h1>
+Author Id:<input type="text" name="authorId" value="${Author.authorId}">
+<br>
+<br>
+<input type="submit" value="SearchDetails">
+</form>
+<form action="updateData">
+<h1>Author Name:</h1>
+<input type="text" name="authorName" value="${Author.authorName}">
+<br>
+<br>
+<h1>Author City: </h1>
+<input type="text" name="authorCity" value="${Author.authorCity}">
+<br>
+<br>
+
+<input type="submit" value="UpdateAuthorDetails">
+</form>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+@charset "ISO-8859-1";
+
+input[type=text] 
+{
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Syncopate);
+
+body { 
+  background: aqua;
+  text-align: center;
+  padding: 20px 20px;
+}
+h1 {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 0.9;
+  padding: 10px;
+  font-family: 'Syncopate', sans-serif;
+  text-transform: uppercase;
+  background: radial-gradient(
+    circle farthest-corner at center center,
+    skyblue,
+    #111
+  ) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>        
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    <property name="hbm2ddl.auto">create</property>
+
+    <mapping class="com.myspr.demo.Model.Author"/>
+
+  </session-factory>
+</hibernate-configuration>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.myspr.demo.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Author {
+
+@Id
+int authorId;
+String authorName;
+String authorCity;
+
+
+public Author() {
+// TODO Auto-generated constructor stub
+}
+
+@Override
+public String toString() {
+	return "Author [authorCity=" + authorCity + "]";
+}
+
+public Author(int authorId, String authorName, String authorCity) {
+super();
+this.authorId = authorId;
+this.authorName = authorName;
+this.authorCity = authorCity;
+}
+public int getAuthorId() {
+return authorId;
+}
+public void setAuthorId(int authorId) {
+this.authorId = authorId;
+}
+public String getAuthorName() {
+return authorName;
+}
+public void setAuthorName(String authorName) {
+this.authorName = authorName;
+}
+public String getCity() {
+return city;
+}
+public void setCity( String authorCity) {
+this.authorCity = authorCity;
+}
+String city;
+
+
+
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.myspr.demo.dao;
+
+import java.util.ArrayList;
+
+import javax.transaction.Transactional;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.myspr.demo.Model.Author;
+
+@Transactional
+public class AuthorDao {
+
+
+@Autowired
+SessionFactory factory;
+
+
+public AuthorDao() {
+// TODO Auto-generated constructor stub
+}
+
+
+public AuthorDao(SessionFactory factory) {
+super();
+this.factory = factory;
+}
+
+
+public String saveAuthor(Author author){
+try{
+Session session=factory.getCurrentSession();
+session.save(author);
+return "Author Created";
+}
+catch (Exception e) {
+// TODO: handle exception
+e.printStackTrace();
+}
+
+return "cannot create Author";
+}
+
+
+public Author getAuthorById(int authorId){
+	try{
+	Session session=factory.getCurrentSession();
+	Author author=(Author)session.get(Author.class,authorId);
+	return author;
+	}
+	catch (Exception e) {
+	// TODO: handle exception
+	e.printStackTrace();
+	}
+	return null;
+	}
+
+	public String updateAuthorById(Author author){
+	try{
+	Session session=factory.getCurrentSession();
+	System.out.println("Author "+author);
+	session.update("Author", author);
+	return "Author Updated";
+	}
+	catch (Exception e) {
+	// TODO: handle exception
+	e.printStackTrace();
+	}
+	return "Cannot Update Author";
+}
+	public ArrayList<Author> getByauthorCity(String authorCity){
+		
+		Session session=factory.openSession();
+		Criteria ct=session.createCriteria(Author.class);
+		ct.add(Restrictions.ilike("authorCity", authorCity));
+		ArrayList<Author> author=(ArrayList<Author>) ct.list();
+		System.out.println(author);
+		return author;
+	}
+	
+	public String getByauthorName(String authorName){
+		
+		Session session=factory.openSession();
+		
+		Criteria ct=session.createCriteria(Author.class);
+		ct.add(Restrictions.ilike("authorName", authorName));
+		ArrayList<Author> author=(ArrayList<Author>) ct.list();
+		System.out.println(author);
+		return "author";
+	}
+	public String deleteAuthor(String authorName){
+		try{
+		Session session=factory.getCurrentSession();
+		Query query=session.createQuery("delete from Author a  where a.authorName=:authorname");
+		query.setParameter("authorname", authorName);
+		int count=query.executeUpdate();
+		if(count>0)
+			return "Data deleted";
+		}
+		catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		}
+
+		return "Cannot Delete Data";
+		}
+
+
+
+
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+package com.myspr.demo;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.myspr.demo.Model.Author;
+import com.myspr.demo.dao.AuthorDao;
+
+
+@Controller
+public class HomeController {
+
+@Autowired
+AuthorDao dao;
+
+
+
+@RequestMapping(value="/")
+public String home(Model model)
+{
+return "home";
+}
+
+@RequestMapping(value="/SaveDetailsAuthor")
+public String SaveDetails(Model model)
+{
+return "SaveDetailsAuthor";
+}
+
+@RequestMapping(value="/display")
+public String display(Model model,@ModelAttribute Author author)
+{
+String status=dao.saveAuthor(author);
+model.addAttribute("status",status);
+return "display";
+}
+
+
+@RequestMapping(value="/updateAuthorPage")
+public String update()
+{
+return "UpdateAuthorPage";
+}
+
+int authorId=0;
+
+@RequestMapping(value="/searchForUpdate")
+public String searchForUpdate(Model model,@RequestParam("authorId") String authorId)
+{
+int authorID=Integer.parseInt(authorId);
+this.authorId=authorID;
+Author author=dao.getAuthorById(authorID);
+model.addAttribute(author);
+return "UpdateAuthorPage";
+}
+
+@RequestMapping(value="/updateData")
+public String updateData(Model model ,@ModelAttribute Author author)
+{
+author.setAuthorId(authorId);
+dao.updateAuthorById(author);
+String status=dao.updateAuthorById(author);
+model.addAttribute("status",status);
+return "display";
+}
+@RequestMapping(value="/SearchDetailsByCity")
+public String SearchDetailsByCity(Model model)
+{
+return "SearchDetailsByCity";
+}
+
+@RequestMapping(value="/authorsByCity")
+public String authorsByCity(Model model,@RequestParam("authorByCity") String authorCity)
+{
+ArrayList<Author> author=dao.getByauthorCity(authorCity);
+model.addAttribute("author",author);
+return "displayByAuthorCity";
+}
+
+
+@RequestMapping(value="/SearchDetailsByName")
+public String SearchDetailsByName(Model model)
+{
+return "SearchDetailsByAuthorName";
+}
+@RequestMapping(value="/authorsByName")
+public String authorsByName(Model model,@RequestParam("authorrName") String authorName)
+{
+String player=dao.getByauthorName(authorName);
+model.addAttribute("player",player);
+return "displayByPlayerName";
+}
+
+
+@RequestMapping(value="/DeleteDetailsByName")
+public String DeleteDetailsByName(Model model)
+{
+return "DeleteDetailsByAuthorName";
+}
+@RequestMapping(value="/deleteByName")
+public String deleteByName(Model model,@RequestParam("authorName") String authorName)
+{
+String status=dao.deleteAuthor(authorName);
+model.addAttribute("status",status);
+return "display";
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
