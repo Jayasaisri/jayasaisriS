@@ -282,10 +282,10 @@ public class DxcUsers {
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
-<groupId>dxcresthib</groupId>
-<artifactId>Dxc-RestHib</artifactId>
+<groupId>com.task.task</groupId>
+<artifactId>demo</artifactId>
 <version>0.0.1-SNAPSHOT</version>
-<name>Dxc-RestHib</name>
+<name>demo</name>
 <description>Demo project for Spring Boot</description>
 
 
@@ -340,6 +340,677 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 
 </project>
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+body
+{
+background: url("enter.jpg");
+background-repeat: no-repeat;
+background-size: 55%;
+opacity: 0.8;
+}
+
+</style>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Add icon library -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.input-container {
+	display: -ms-flexbox; /* IE10 */
+	display: flex;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.icon {
+	padding: 10px;
+	background: black;
+	color: white;
+	min-width: 50px;
+	text-align: center;
+}
+
+.input-field {
+	width: 100%;
+	padding: 10px;
+	outline: none;
+}
+
+.input-field:focus {
+	border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+	background-color: black;
+	color: white;
+	padding: 15px 20px;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	opacity: 0.9;
+}
+
+.btn:hover {
+	opacity: 1;
+}
+h2{
+font-family: Viner Hand ITC;
+}
+</style>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+
+
+<h2>${userId}</h2>
+	<form action="changepass" method="get"
+		style="max-width: 300px; margin: auto">
+		<center>
+			<h2 style="color: black"> CHANGE PASSWORD </h2>
+		</center>
+		<div class="input-container">
+    
+    <input class="input-field" type="hidden" placeholder="User Id" name="userid"  value="${userId}" onkeypress ="test(event)" required>
+  </div>
+		
+		<div class="input-container">
+			<i class="fa fa-key icon"></i> <input class="input-field"
+				type="password" placeholder="Password" name="password" required>
+		</div>
+		<div class="input-container">
+			<i class="fa fa-key icon"></i> <input class="input-field"
+				type="password" placeholder="Conform Password" name="conformPass"
+				required>
+		</div>
+		<button type="submit" class="btn">Login</button>
+	</form>
+	
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+body {
+    background-image: url("create user successfull.jpg");
+    background-repeat: no-repeat;
+ background-size: 100%;
+opacity: 0.8;
+}
+h1{
+font-family: Viner Hand ITC;
+}
+</style>
+</head>
+<body>
+<center>
+<h1> Details Registered Successfully</h1>
+
+<p>${status}</p>
+<form action="displayLogin" method="get">
+	<input type="submit" value="LoginPage">
+</form>
+</center>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<center>
+	<h1 style="color: red; font-family: Viner Hand ITC;;">Please Enter The Details Correctly</h1>
+	
+<form action="error" method="get">
+	<input type="submit" value="LoginPage">
+</form>
+</center>
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+
+body
+{
+background-image: url("sorry.jpg");
+ background-repeat: 2;
+background-size: 80%;
+opacity: 1;
+}
+h1{
+font-family: Viner Hand ITC;
+}
+
+
+</style>
+</head>
+<body>
+
+<form action="forgotpass">
+<center>
+	<h1 >Login Failed!!! Please Enter the details </h1>
+	<input type="submit" value="Forgot Password?">
+	</center>
+</form>
+
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+body
+{
+background: url("forgota.jpg");
+background-repeat: no-repeat;
+background-size: 50%;
+opacity: 0.8;
+}
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: black;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid aquablue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: black;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+h2{
+font-family: Viner Hand ITC;
+}
+</style>
+<script type="text/javascript">
+
+</script>
+
+</head>
+<body>
+
+
+
+<form action="pass" method="get" style="max-width:300px;margin:auto">
+
+   <center><h2 style="color: Black" > Please Enter The Details </h2></center>
+
+   <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="User Id" name="userid"  onkeypress ="test(event)" required>
+  </div>
+	
+	<div class="input-container">
+    <i class="fa fa-book icon"></i>
+  
+
+      <select name="security_question">
+     <option>security Question</option>
+     <option>What is Your First name?</option>
+     <option>What is your favorite color?</option>
+     <option>What is Your favorite HOLIDAYSPOT?</option>
+     <option>What is your best friend  name?</option>
+     <option>What is your favorite food?</option>
+     
+     
+      </select>
+    </div>
+
+
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Security Ans" name="security_answer"  onkeypress ="test(event)" required>
+
+
+  </div>
+ 
+
+  <button type="submit" class="btn">Proceed</button>
+</form>
+
+
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+body
+{
+background-image: url("log.jpeg");
+background-repeat: no-repeat;
+background-size: 100%;
+
+opacity: 0.8;
+}
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: black;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: black;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+h2{
+font-family: Viner Hand ITC;
+}
+</style>
+<script type="text/javascript">
+
+
+</script>
+
+</head>
+
+<body>
+
+<form action="regdata" method="post" style="max-width:300px;margin:auto">
+   <center><h2 style="color: Black" > USER REGISTRATION  </h2></center>
+
+   <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="User Id" name="userid"  onkeypress ="test(event)" required>
+  </div>
+  
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="User name" name="username"  onkeypress ="test(event)" required>
+  </div>
+
+
+  
+  <div class="input-container">
+    <i class="fa fa-key icon"></i>
+   
+    <input class="input-field" type="password" placeholder="Password" name="password"  required>
+  </div>
+
+
+ <div class="input-container">
+    <i class="fa fa-book icon"></i>
+  
+
+      <select name="security_question">
+     <option>security Question</option>
+     <option>What is Your First name?</option>
+     <option>What is your favorite color?</option>
+     <option>What is Your favorite HOLIDAYSPOT?</option>
+     <option>What is your best friend  name?</option>
+     <option>What is your favorite food?</option>
+   
+    
+     
+      </select>
+    </div>
+
+ </div>
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="Security Ans" name="security_answer"  onkeypress ="test(event)" required>
+
+
+  </div>
+ 
+
+</body>
+
+  <button type="submit" class="btn">Register</button>
+</form>
+
+</body>
+</html>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+body {
+    background-image: url("success.jpg");
+    background-repeat: no-repeat;
+   background-size: 100%;
+   
+    opacity: 0.8;
+}
+h2{
+font-family: : Viner Hand ITC;
+}
+</style>
+</head>
+<body>
+<center>
+
+	<h1 >Login  successfull</h1>
+	<h1> Welcome to DXC Technology</h1>
+	<h2><a href="https://jobs.dxc.technology/">click to portal!</a></h2>
+	</center>
+</body>
+</html>
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+body
+{
+background-image: url("register.jpeg");
+background-repeat: no-repeat;
+background-size: 100%;
+opacity: 0.8;
+}
+h2{
+font-family: : Viner Hand ITC;
+}
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: black;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: black;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+</style>
+<script type="text/javascript">
+
+
+</script>
+
+</head>
+
+<body>
+
+<form action="login" method="get" style="max-width:300px;margin:auto">
+   <center><h2 style="color: Black" > USER LOGIN PAGE </h2></center>
+
+   <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="User Id" name="userid"  onkeypress ="test(event)" required>
+  </div>
+  
+  <div class="input-container">
+    <i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" placeholder="User name" name="username"  onkeypress ="test(event)" required>
+  </div>
+
+
+  
+  <div class="input-container">
+    <i class="fa fa-key icon"></i>
+   
+    <input class="input-field" type="password" placeholder="Password" name="password"  required>
+  </div>
+
+
+
+</body>
+
+  <button type="submit" class="btn">Login</button>
+</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
